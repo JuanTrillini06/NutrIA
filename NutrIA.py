@@ -1,22 +1,47 @@
 import streamlit as st
 
-def main():
-    # Define the title and subtitle of the app
-    st.title("Plan de Alimentación")
-    st.subheader("Crea un plan de alimentación personalizado")
+def generar_plan_alimentacion(objetivo, tipo_dieta, calorias, restricciones):
+    # Ejemplo de un plan de alimentación simple (puedes personalizarlo)
+    plan = [
+        {
+            "comida": "Desayuno",
+            "menu": "Avena con frutas y almendras",
+            "calorias": 300
+        },
+        {
+            "comida": "Almuerzo",
+            "menu": "Ensalada de pollo con quinoa y vegetales",
+            "calorias": 500
+        },
+        {
+            "comida": "Cena",
+            "menu": "Salmón a la parrilla con espárragos",
+            "calorias": 400
+        },
+        {
+            "comida": "Snack",
+            "menu": "Yogur griego con miel y nueces",
+            "calorias": 200
+        }
+    ]
+    return plan
 
-    # Get user input for the objective, diet type, consumed calories, and dietary restrictions
-    objective = st.selectbox("Objetivo:", ["Perder peso", "Ganar peso", "Mantener peso"])
-    diet_type = st.selectbox("Tipo de dieta:", ["Equilibrada", "Economica", "Estricta"])
-    consumed_calories = st.number_input("Calorías consumidas:", min_value=0, step=100)
-    dietary_restrictions = st.multiselect("Restricciones alimenticias:", 
-                                          ["Gluten", "Lactosa", "Frutos secos", "Mariscos", "Vegana"])
+# Configuración de la app
+st.title('Generador de Plan de Alimentación')
 
-    # Display the user's input
-    st.write("Objetivo: ", objective)
-    st.write("Tipo de dieta: ", diet_type)
-    st.write("Calorías consumidas: ", consumed_calories)
-    st.write("Restricciones alimenticias: ", dietary_restrictions)
+# Entrada del usuario
+objetivo = st.selectbox('¿Cuál es tu objetivo?', ['Perder peso', 'Mantener peso', 'Ganar músculo'])
+tipo_dieta = st.selectbox('¿Qué tipo de dieta prefieres?', ['Omnívora', 'Vegetariana', 'Vegana', 'Keto', 'Paleo'])
+calorias = st.slider('Calorías diarias consumidas', 1000, 4000, 2000)
+restricciones = st.text_area('¿Tienes alguna restricción alimenticia?', 'Ninguna')
 
+# Generar plan de alimentación
+if st.button('Generar Plan'):
+    plan = generar_plan_alimentacion(objetivo, tipo_dieta, calorias, restricciones)
+    st.write('### Tu plan de alimentación:')
+    for comida in plan:
+        st.write(f"**{comida['comida']}:** {comida['menu']} - {comida['calorias']} calorías")
+
+# Run the app
 if __name__ == "__main__":
-    main()
+    st.run()
