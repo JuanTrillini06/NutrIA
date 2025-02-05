@@ -7,10 +7,10 @@ def main():
 
     # Get user input for the objective, diet type, consumed calories, and dietary restrictions
     objective = st.selectbox("Objetivo:", ["Perder peso", "Ganar peso", "Mantener peso"])
-    diet_type = st.selectbox("Tipo de dieta:", ["Vegetariana", "Vegana", "Omnívora"])
+    diet_type = st.selectbox("Tipo de dieta:", ["Equilibrada", "Economica", "Estricta"])
     consumed_calories = st.number_input("Calorías consumidas:", min_value=0, step=100)
     dietary_restrictions = st.multiselect("Restricciones alimenticias:", 
-                                          ["Gluten", "Lactosa", "Frutos secos", "Mariscos"])
+                                          ["Gluten", "Lactosa", "Frutos secos", "Mariscos", "Vegana"])
 
     # Display the user's input
     st.write("Objetivo: ", objective)
