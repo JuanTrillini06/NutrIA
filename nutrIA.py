@@ -36,7 +36,7 @@ restricciones = st.text_input(
 # Función para generar el plan
 def generar_plan():
     restricciones_texto = restricciones if restricciones else 'Ninguna'
-    prompt = f"""
+    mensaje = f"""
     Eres un nutricionista profesional. Crea un plan de alimentación semanal personalizado basado en las siguientes preferencias:
     - Objetivo: {objetivo}
     - Tipo de plan: {tipo_plan}
@@ -45,14 +45,19 @@ def generar_plan():
     
     El plan debe ser detallado, incluyendo desayuno, almuerzo, cena y snacks para cada día de la semana. Las comidas deben ser variadas y considerar alimentos accesibles. Presenta la información de manera clara y organizada.
     """
-    respuesta = openai.Completion.create(
-        engine='text-davinci-003',
-        prompt=prompt,
-        max_tokens=2500,
-        temperature=0.7
+
+    respuesta = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "Eres un asistente nutricionista profesional."},
+            {"role": "user", "content": mensaje}
+        ],
+        temperature=0.7,
+        max_tokens=1000
     )
-    plan = respuesta.choices[0].text.strip()
+    plan = respuesta["choices"][0]["message"]["content"]
     return plan
+
 
 # Botón para generar el plan
 if st.button('Generar Plan de Nutrición'):
